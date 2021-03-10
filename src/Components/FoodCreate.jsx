@@ -21,8 +21,18 @@ export class FoodCreate extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form
+        onSubmit={this.handleSubmit}
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          width: '60%',
+          height: '100px',
+          marginTop: '30px',
+        }}
+      >
         <input
+          placeholder="name"
           type="text"
           name="name"
           value={this.state.name}
@@ -30,17 +40,21 @@ export class FoodCreate extends Component {
         ></input>
         <input
           type="number"
+          placeholder="calories"
           name="calories"
           value={this.state.calories}
           onChange={this.handleChange}
         ></input>
         <input
           type="text"
+          placeholder="image url"
           name="image"
           value={this.state.image}
           onChange={this.handleChange}
         ></input>
-        <button type="submit">Submit</button>
+        <button style={{ height: '30px' }} type="submit">
+          Submit
+        </button>
       </form>
     );
   }

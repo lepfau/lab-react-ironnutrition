@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import foods from '../foods.json';
 import Foodbox from './FoodBox';
 import FoodCreate from './FoodCreate';
+import SearchBar from './SearchBar';
 
 class FoodList extends Component {
   state = {
@@ -16,6 +17,22 @@ class FoodList extends Component {
     });
   };
 
+  handleSearch = (searchvalue) => {
+    if (searchvalue) {
+      let searched = [...this.state.foodlist];
+      const filteredFood = searched.filter((food) => {
+        return food.name.toLowerCase().includes(searchvalue.toLowerCase());
+      });
+      this.setState({
+        foodlist: filteredFood,
+      });
+    } else {
+      this.setState({
+        foodlist: foods,
+      });
+    }
+  };
+
   handleClick = () => {
     console.log('click');
     !this.state.showForm
@@ -27,6 +44,7 @@ class FoodList extends Component {
     return (
       <div>
         <h1>Food App</h1>
+        <SearchBar handleSearch={this.handleSearch} />
         <button onClick={this.handleClick}>Add Food</button>
         {this.state.showForm && <FoodCreate addItem={this.addItem} />}
         {this.state.foodlist.map((food) => {
