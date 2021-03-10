@@ -3,17 +3,27 @@ import foods from '../foods.json';
 import Foodbox from './FoodBox';
 import FoodCreate from './FoodCreate';
 import SearchBar from './SearchBar';
+import TodaysFood from './TodaysFood';
 
 class FoodList extends Component {
   state = {
     showForm: false,
     foodlist: foods,
+    todaysfood: [],
   };
 
   addItem = (item) => {
     this.setState({
       foodlist: [item, ...this.state.foodlist],
       showForm: false,
+    });
+  };
+
+  handleAdd = (props) => {
+    let temp = [...this.state.todaysfood];
+    temp.push(props);
+    this.setState({
+      todaysfood: temp,
     });
   };
 
@@ -45,6 +55,7 @@ class FoodList extends Component {
       <div>
         <h1>Food App</h1>
         <SearchBar handleSearch={this.handleSearch} />
+        <TodaysFood todaysfood={this.state.todaysfood} />
         <button onClick={this.handleClick}>Add Food</button>
         {this.state.showForm && <FoodCreate addItem={this.addItem} />}
         {this.state.foodlist.map((food) => {
@@ -53,6 +64,7 @@ class FoodList extends Component {
               name={food.name}
               image={food.image}
               calories={food.calories}
+              handleAdd={this.handleAdd}
             />
           );
         })}
